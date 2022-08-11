@@ -1,0 +1,23 @@
+{
+  "name": "weather-app",
+  "version": "1.0.0",
+  "description": "",
+  "default": "index.html",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html --dist-dir ./dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dejan2504/weather-app.git"
+  },
+  "author": "Dejan Krajisnik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dejan2504/weather-app/issues"
+  },
+  "homepage": "https://github.com/Dejan2504/weather-app#readme",
+  "devDependencies": {
+    "parcel": "^2.7.0"
+  }
+}
