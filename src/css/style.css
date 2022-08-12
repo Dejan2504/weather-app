@@ -3,5 +3,81 @@
 }
 
 body{
-    background-color: green;
+    background-image: url('https://images.unsplash.com/photo-1596627008830-41d373a44a96?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1632&q=80');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.card{
+    color: whitesmoke;
+    background-color: #444e;
+    width: 30em;
+    border-radius: 30px;
+    height: 35em;
+    padding: 30px;
+}
+
+.main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h2{
+    font-size: 2em;
+}
+
+h1{
+    font-size: 4em;
+}
+
+.stats {
+    padding: 0 0 40px 0;
+}
+
+.stats div{
+    font-size: 1.2em;
+    padding: 5px 0;
+}
+
+.clock-container {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px 20px 0 0;
+    font-size: 1.2em;
+}
+
+input[type="text"] {
+    background: #333;
+    width: 13vw;
+    padding: 5px;
+    margin: 0 3px 0 0;
+    border: none;
+    color: white;
+    outline: none;
+    transition: ease 0.5s;
+}
+
+input[type="text"]:focus {
+    background: #555;
+    transition: ease 0.5s;
+}
+
+button {
+    padding: 3px;
+    border:none;
+    border-radius: 30px;
+    background: transparent;
+    transition: ease 0.2s;
+}
+
+button:hover {
+    border:none;
+    background: rgb(136, 136, 136, 0.8);
+    transition: ease 0.2s;
 }
