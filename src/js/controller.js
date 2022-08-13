@@ -6,7 +6,7 @@ const humidity = document.querySelector('.humidity');
 const feelLike = document.querySelector('.feellike');
 const pressure = document.querySelector('.pressure');
 const description = document.querySelector('.card-description');
-const city = document.querySelector('.card h2');
+const location = document.querySelector('.card h2');
 const input = document.querySelector('input');
 const button = document.querySelector('button');
 
@@ -30,7 +30,7 @@ const getCounty = async function(){
       const countryFetch = await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
       const countryData = await countryFetch.json();
 
-      city.innerHTML = `Weather in ${countryData.city}`;
+      location.innerHTML = `Weather in ${countryData.city}`;
 };
 
 const getWeather = async function(){
@@ -48,23 +48,29 @@ const getWeather = async function(){
      console.log(data);
 };
 
+const searchCity = async function(){
+      const city = input.value;
+
+      const searchTerm = city.split(' ').forEach(e => e.substring(0, 1));
+      console.log(searchTerm);
+
+     const result =await fetch(`http://api.weatherapi.com/v1/q=${searchTerm}&key=${API_KEY}`);
+     const data = await result.json();
+     console.log(data);
+};
+
 const renderClock = function(){
       const date = new Date();
-
       clock.innerHTML = date.toLocaleTimeString();
 };
 
-const searchCity = function(){
-      const city = input.value;
-      console.log(city);
-}
-
-button.addEventListener('click', searchCity);
+// button.addEventListener('click', searchCity);
 
 const init = function(){
       getCounty();
-      renderClock();
       getWeather();
+      searchCity();
+      setInterval(renderClock, 1000);
 };
 
 init();
