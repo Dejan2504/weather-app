@@ -1,4 +1,4 @@
-import { API_KEY } from "./config";
+import { API_KEY_OW, API_KEY_VC } from "./config";
 
 const clock = document.querySelector('.clock');
 const temperature = document.querySelector('.card h1');
@@ -10,7 +10,6 @@ const location = document.querySelector('.card h2');
 const input = document.querySelector('input');
 const button = document.querySelector('button');
 
-console.log(input, button);
 
 const getPosition = function () {
       return new Promise(function (resolve, reject) {
@@ -25,7 +24,6 @@ const getPosition = function () {
 const getCounty = async function(){
       const pos = await getPosition();
       const {latitude: lat , longitude: lng} = pos.coords;
-      console.log(lat, lng);
 
       const countryFetch = await fetch(`https://geocode.xyz/${lat},${lng}?geoit=json`);
       const countryData = await countryFetch.json();
@@ -37,26 +35,35 @@ const getWeather = async function(){
       const pos = await getPosition();
       const {latitude , longitude} = pos.coords;
       
-      const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${latitude},${longitude}?key=${API_KEY}`);
+      const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${latitude},${longitude}?key=${API_KEY_VC}`);
 
       const data = await response.json();
-      temperature.innerHTML = data.currentConditions.temp + "℉";
+      const celsius = ((data.currentConditions.temp - 32) * 5/9).toFixed(2);
+      const celsiusFeelsLike = ((data.currentConditions.feelslike - 32) * 5/9).toFixed(2);
+      temperature.innerHTML = celsius + "℃";
       humidity.innerHTML = `Humidity: ${data.currentConditions.humidity}%`;
-      feelLike.innerHTML = `Feels like: ${data.currentConditions.feelslike}℉`;
+      feelLike.innerHTML = `Feels like: ${celsiusFeelsLike}℃`;
       pressure.innerHTML = `Pressure: ${data.currentConditions.pressure} mbar`;
       description.innerHTML = data.description;
-     console.log(data);
 };
 
 const searchCity = async function(){
       const city = input.value;
 
-      const searchTerm = city.split(' ').forEach(e => e.substring(0, 1));
-      console.log(searchTerm);
+      const searchTerm = city;
 
-     const result =await fetch(`http://api.weatherapi.com/v1/q=${searchTerm}&key=${API_KEY}`);
+     const result =await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${searchTerm}&appid=${API_KEY_OW}`);
      const data = await result.json();
-     console.log(data);
+
+     const celsius = (data.main.temp - 273.15).toFixed(2);
+      const celsiusFeelsLike = (data.main.feels_like - 273.15).toFixed(2);
+
+     location.innerHTML = `Weather in ${data.name}`;
+     temperature.innerHTML = celsius + "℃";
+      humidity.innerHTML = `Humidity: ${data.humidity}%`;
+      feelLike.innerHTML = `Feels like: ${celsiusFeelsLike}℃`;
+      pressure.innerHTML = `Pressure: ${data.pressure} mbar`;
+      description.innerHTML = data.description ? data.description : '';
 };
 
 const renderClock = function(){
@@ -64,12 +71,11 @@ const renderClock = function(){
       clock.innerHTML = date.toLocaleTimeString();
 };
 
-// button.addEventListener('click', searchCity);
+button.addEventListener('click', searchCity);
 
 const init = function(){
       getCounty();
       getWeather();
-      searchCity();
       setInterval(renderClock, 1000);
 };
 
