@@ -53,9 +53,10 @@ h1{
 }
 
 input[type="text"] {
+    border-radius: 30px;
     background: #333;
     width: 13vw;
-    padding: 5px;
+    padding: 7px;
     margin: 0 3px 0 0;
     border: none;
     color: white;
@@ -80,4 +81,14 @@ button:hover {
     border:none;
     background: rgb(136, 136, 136, 0.8);
     transition: ease 0.2s;
+}
+
+.icon {
+    display: flex;
+}
+
+img{
+    width: 64px;
+    margin: 42px 10px;
+    height: 64px;
 }
