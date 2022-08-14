@@ -28,8 +28,9 @@ const getCounty = async function(){
       const pos = await getPosition();
       const {latitude: lat , longitude: lng} = pos.coords;
 
-      const countryFetch = await fetch(`http://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lng}&appid=${API_KEY_OW}`);
+      const countryFetch = await fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lng}&appid=${API_KEY_OW}`);
       const countryData = await countryFetch.json();
+      console.log(countryData);
 
       location.innerHTML = `Weather in ${countryData[0].name}`;
       }catch(err){
