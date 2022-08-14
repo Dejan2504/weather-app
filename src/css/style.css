@@ -92,3 +92,88 @@ img{
     margin: 42px 10px;
     height: 64px;
 }
+
+@media only screen and (max-width: 600px) {
+
+    .card{
+        color: whitesmoke;
+        background-color: #444e;
+        width: 17em;
+        border-radius: 30px;
+        height: 29em;
+        padding: 30px;
+    }
+    
+    .main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    h2{
+        font-size: 1.3em;
+    }
+    
+    h1{
+        font-size: 2em;
+    }
+    
+    .stats {
+        padding: 10% 0 10%;
+    }
+    
+    .stats div{
+        font-size: 1em;
+        padding: 3px 0;
+    }
+    
+    .clock-container {
+        display: flex;
+        justify-content: flex-end;
+        padding: 20px 20px 0 0;
+        font-size: 1.2em;
+    }
+    
+    input[type="text"] {
+        border-radius: 30px;
+        background: #333;
+        width: 43vw;
+        padding: 7px;
+        margin: 0 3px 0 0;
+        border: none;
+        color: white;
+        outline: none;
+        transition: ease 0.5s;
+    }
+    
+    input[type="text"]:focus {
+        background: #555;
+        transition: ease 0.5s;
+    }
+    
+    button {
+        padding: 3px;
+        border:none;
+        border-radius: 30px;
+        background: transparent;
+        transition: ease 0.2s;
+    }
+    
+    button:hover {
+        border:none;
+        background: rgb(136, 136, 136, 0.8);
+        transition: ease 0.2s;
+    }
+    
+    .icon {
+        display: flex;
+    }
+    
+    img{
+        width: 3.5em;
+        margin: 10% 5%;
+        height: 2.5em;
+    }
+     
+    
+}
