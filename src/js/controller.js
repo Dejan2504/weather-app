@@ -1,4 +1,4 @@
-import { API_KEY_OW, API_KEY_VC } from "./config";
+import { API_KEY } from "./config";
 
 const clock = document.querySelector('.clock');
 const temperature = document.querySelector('.card h1');
@@ -13,7 +13,6 @@ const iconContainer = document.querySelector('img');
 
 
 const getPosition = function () {
-
             return new Promise(function (resolve, reject) {
               navigator.geolocation.getCurrentPosition(
                 position => resolve(position),
@@ -26,13 +25,12 @@ const getPosition = function () {
 const getCounty = async function(){
       try{
       const pos = await getPosition();
-      const {latitude: lat , longitude: lng} = pos.coords;
+      const {latitude: lat , longitude: lon} = pos.coords;
 
-      const countryFetch = await fetch(`https://api.openweathermap.org/geo/1.0/reverse?lat=${lat}&lon=${lng}&appid=${API_KEY_OW}`);
+      const countryFetch = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`);
       const countryData = await countryFetch.json();
-      console.log(countryData);
 
-      location.innerHTML = `Weather in ${countryData[0].name}`;
+      location.innerHTML = `Weather in ${countryData.name}`;
       }catch(err){
             console.log('Error:' + err);
       }
@@ -40,41 +38,43 @@ const getCounty = async function(){
 
 const getWeather = async function(){
       const pos = await getPosition();
-      const {latitude , longitude} = pos.coords;
+      const {latitude: lat , longitude: lon} = pos.coords;
       
-      const response = await fetch(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${latitude},${longitude}?key=${API_KEY_VC}`);
-      const data = await response.json();
-      const icon = data.currentConditions.icon;
+      const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`);
+      const data = (await response.json());
 
-      const celsius = ((data.currentConditions.temp - 32) * 5/9).toFixed(2);
-      iconContainer.src = `https://raw.githubusercontent.com/visualcrossing/WeatherIcons/main/PNG/4th%20Set%20-%20Color/${icon}.png`;
-      const celsiusFeelsLike = ((data.currentConditions.feelslike - 32) * 5/9).toFixed(2);
+      const icon = data.weather[0].icon;
+      const celsius = (data.main.temp - 273.15).toFixed(0);
+      const celsiusFeelsLike = (data.main.feels_like - 273.15).toFixed(0);
+ 
+      location.innerHTML = `Weather in ${data.name}`;
       temperature.innerHTML = celsius + "℃";
-      humidity.innerHTML = `Humidity: ${data.currentConditions.humidity}%`;
+      iconContainer.src = `http://openweathermap.org/img/wn/${icon}@2x.png`;
+      humidity.innerHTML = `Humidity: ${data.main.humidity}%`;
       feelLike.innerHTML = `Feels like: ${celsiusFeelsLike}℃`;
-      pressure.innerHTML = `Pressure: ${data.currentConditions.pressure} mbar`;
-      description.innerHTML = data.description;
+      pressure.innerHTML = `Pressure: ${data.main.pressure} mbar`;
+      description.innerHTML = data.weather[0].description ? `Descritpion: ${data.weather[0].description}` : '';
 };
 
 const searchCity = async function(){
       const city = input.value;
-
       const searchTerm = city;
 
-     const result =await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${searchTerm}&appid=${API_KEY_OW}`);
+     const result =await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${searchTerm}&appid=${API_KEY}`);
      const data = await result.json();
      const icon = data.weather[0].icon;
 
-     const celsius = (data.main.temp - 273.15).toFixed(2);
-      const celsiusFeelsLike = (data.main.feels_like - 273.15).toFixed(2);
+     const celsius = (data.main.temp - 273.15).toFixed(0);
+      const celsiusFeelsLike = (data.main.feels_like - 273.15).toFixed(0);
 
      location.innerHTML = `Weather in ${data.name}`;
      temperature.innerHTML = celsius + "℃";
      iconContainer.src = `http://openweathermap.org/img/wn/${icon}@2x.png`;
-      humidity.innerHTML = `Humidity: ${data.main.humidity}%`;
-      feelLike.innerHTML = `Feels like: ${celsiusFeelsLike}℃`;
-      pressure.innerHTML = `Pressure: ${data.main.pressure} mbar`;
-      description.innerHTML = data.description ? data.description : '';
+     humidity.innerHTML = `Humidity: ${data.main.humidity}%`;
+     feelLike.innerHTML = `Feels like: ${celsiusFeelsLike}℃`;
+     pressure.innerHTML = `Pressure: ${data.main.pressure} mbar`;
+     description.innerHTML = data.description ? `Descritpion: ${data.weather[0].description}` : '';
+     input.value = '';
 };
 
 const renderClock = function(){
@@ -83,6 +83,11 @@ const renderClock = function(){
 };
 
 button.addEventListener('click', searchCity);
+window.addEventListener('keydown', (e) => {
+      if(e.key === "Enter"){
+            searchCity();
+      }
+})
 
 const init = function(){
       getCounty();

@@ -3,7 +3,7 @@
 }
 
 body{
-    background-image: url('https://images.unsplash.com/photo-1596627008830-41d373a44a96?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1632&q=80');
+    background-image: url('https://source.unsplash.com/1600x900/?landscape');
     background-repeat: no-repeat;
     background-size: cover;
     display: flex;
@@ -55,7 +55,7 @@ h1{
 input[type="text"] {
     border-radius: 30px;
     background: #333;
-    width: 13vw;
+    width: 25vw;
     padding: 7px;
     margin: 0 3px 0 0;
     border: none;
@@ -88,9 +88,39 @@ button:hover {
 }
 
 img{
-    width: 64px;
-    margin: 42px 10px;
-    height: 64px;
+    width: 10vw;
+    height: 15vh;
+    margin: 6% 1%;
+}
+
+@media only screen and (min-width: 1440px) {
+    
+    img{
+        width: 7vw;
+        height: 13vh;
+        margin: 6% 1%;
+    }
+}
+
+@media only screen and (max-width: 768px){
+
+    input[type="text"] {
+        border-radius: 30px;
+        background: #333;
+        width: 35vw;
+        padding: 7px;
+        margin: 0 3px 0 0;
+        border: none;
+        color: white;
+        outline: none;
+        transition: ease 0.5s;
+    }  
+    
+    img{
+        width: 10vw;
+        height: 11vh;
+        margin: 10% 2%;
+    }
 }
 
 @media only screen and (max-width: 600px) {
@@ -171,8 +201,8 @@ img{
     
     img{
         width: 3.5em;
-        margin: 10% 5%;
-        height: 2.5em;
+        height: 3.5em;
+        margin: 6% 3%;
     }
      
     
